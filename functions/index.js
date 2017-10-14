@@ -5,6 +5,8 @@ const castVote = require('./services/cast-vote.js');
 const getVoteSubjects = require('./services/get-vote-subjects.js');
 const getNumberOfVotes = require('./services/get-number-of-votes.js');
 const getUser = require('./services/get-user.js');
+const deleteUser = require('./services/delete-user.js');
+const createUser = require('./services/create-user.js');
 
 admin.initializeApp(functions.config().firebase);
 
@@ -24,3 +26,10 @@ exports.getUser = functions.https.onRequest((request, response) =>
 	getUser(request, response)
 );
 
+exports.deleteUser = functions.https.onRequest((request, response) => 
+	deleteUser(request, response)
+);
+
+exports.createUser = functions.https.onRequest((request, response) => 
+	createUser(request, response)
+);
