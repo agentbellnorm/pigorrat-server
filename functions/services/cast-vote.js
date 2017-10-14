@@ -16,33 +16,29 @@ module.exports = (request, response) => {
 }
 
 const registerVoteInByStructure = (voter, voteSubject, vote) => {
-	var byRef = admin.database().ref(`/votes/by/${voter}/${voteSubject}`);
-	var timestamp = new Date().toISOString();
-	
 	const byVoteToPut = {
 		"vote" : vote,
-		"timestamp" : timestamp
+		"timestamp" : new Date().toISOString()
 	}	
 	
-	byRef.set(byVoteToPut);
+	admin.database()
+	.ref(`/votes/by/${voter}/${voteSubject}`)
+	.set(byVoteToPut);
 }
 
 const registerVoteInOnStructure = (voter, voteSubject, vote) => {
-	var onRef = admin.database().ref(`/votes/on/${voteSubject}/${vote}`);
-	var timestamp = new Date().toISOString();
-	
 	const onVoteToPut = {
 		"voterId" : voter,
-		"timestamp" : timestamp
+		"timestamp" : new Date().toISOString()
 	};
 
-	onRef.push(onVoteToPut);
+	admin.database()
+	.ref(`/votes/on/${voteSubject}/${vote}`)
+	.push(onVoteToPut);
 }
 
 const voteIsInValid = (vote) => {
-	const legal = ['PIG', 'RAT'];
-	
-	return !legal.includes(vote);
+	return !['PIG', 'RAT'].includes(vote);
 }
 
 const throwError = (code, message) => {
