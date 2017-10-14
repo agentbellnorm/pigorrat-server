@@ -25,19 +25,13 @@ const translateRequest = (request) => {
 }
 
 const validate = (request) => {
-	if(request.method != 'PUT'){
-		throwError(404, "Bad request, sucker");
-	}
+	var violation = 
+		request.method != 'PUT' ||
+		!request.body.name ||
+		!request.body.imgUrl ||
+		!request.body.userId;
 
-	if(!request.body.name){
-		throwError(404, "Bad request, sucker");
-	}
-
-	if(!request.body.imgUrl){
-		throwError(404, "Bad request, sucker");
-	}
-
-	if(!request.body.userId){
-		throwError(404, "Bad request, sucker");
+	if(violation){
+		throwError(404, "Bad request, asshole.");
 	}
 }

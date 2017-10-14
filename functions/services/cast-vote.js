@@ -1,13 +1,11 @@
 const admin = require('firebase-admin');
 
 module.exports = (request, response) => {
+	validate(request);
+
 	const voter = request.body.userId;
   	const voteSubject = request.body.voteSubject;
   	const vote = request.body.vote;
-
-  	if (voteIsInValid(vote)) {
-  		throwError(400, `Invalid vote: ${vote}`);
-  	}
 
 	registerVoteInByStructure(voter, voteSubject, vote);
 	registerVoteInOnStructure(voter, voteSubject, vote);
@@ -39,8 +37,17 @@ const registerVoteInOnStructure = (voter, voteSubject, vote) => {
 	.push(onVoteToPut);
 }
 
-const voteIsInValid = (vote) => {
-	return !['PIG', 'RAT'].includes(vote);
+const validate = (request) => {
+	var violation = 
+		!request.method == 'POST' ||
+		!request.body.userId ||
+		!request.body.voteSubject ||
+		!request.body.vote||
+		!['PIG', 'RAT'].includes(vote); 
+
+	if(violation){
+		throwError(400, "Bad request. Sucker.")
+	}
 }
 
 const throwError = (code, message) => {
