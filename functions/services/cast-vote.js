@@ -1,12 +1,11 @@
-const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-exports.castVoteRoute = function(request, response){
+module.exports = (request, response) => {
 	const voter = request.body.userId;
   	const voteSubject = request.body.voteSubject;
   	const vote = request.body.vote;
 
-  	if(voteIsInValid(vote)){
+  	if (voteIsInValid(vote)) {
   		throwError(400, `Invalid vote: ${vote}`);
   	}
 
@@ -16,7 +15,7 @@ exports.castVoteRoute = function(request, response){
 	response.send("ok");
 }
 
-function registerVoteInByStructure(voter, voteSubject, vote){
+const registerVoteInByStructure = (voter, voteSubject, vote) => {
 	var byRef = admin.database().ref(`/votes/by/${voter}/${voteSubject}`);
 	var timestamp = new Date().toISOString();
 	
@@ -28,7 +27,7 @@ function registerVoteInByStructure(voter, voteSubject, vote){
 	byRef.set(byVoteToPut);
 }
 
-function registerVoteInOnStructure(voter, voteSubject, vote){
+const registerVoteInOnStructure = (voter, voteSubject, vote) => {
 	var onRef = admin.database().ref(`/votes/on/${voteSubject}/${vote}`);
 	var timestamp = new Date().toISOString();
 	
@@ -40,15 +39,15 @@ function registerVoteInOnStructure(voter, voteSubject, vote){
 	onRef.push(onVoteToPut);
 }
 
-function voteIsInValid(vote){
+const voteIsInValid = (vote) => {
 	const legal = ['PIG', 'RAT'];
 	
 	return !legal.includes(vote);
 }
 
-function throwError(code, message){
-	  	const error = new Error(message);
-  		error.code = code;
-  		
-  		throw error;
+const throwError = (code, message) => {
+  	const error = new Error(message);
+	error.code = code;
+		
+	throw error;
 }
