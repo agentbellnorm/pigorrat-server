@@ -16,6 +16,6 @@ exports.castVote = functions.https.onRequest((request, response) =>
 );
 
 exports.getNumberOfVotes = functions.https.onRequest((request, response) => 
-	castVote(request, response)
+	getNumberOfVotes(request, response)
 );
 

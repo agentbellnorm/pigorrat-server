@@ -9,7 +9,7 @@ module.exports = (request, response) => {
 	const userId = request.query.userId;
 
 	if (!userId) {
-		throw new Error("UserId is required as query parameter.");
+		throwError(400, "UserId is required as query parameter.");
 	}
 
 	Promise.all([
@@ -32,4 +32,11 @@ module.exports = (request, response) => {
 		response.send(transformedUsers);
 	});
 };
+
+const throwError = (code, message) => {
+  	const error = new Error(message);
+	error.code = code;
+		
+	throw error;
+}
 
