@@ -1,12 +1,18 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
+const castVote = require('./services/cast-vote.js');
+const getVoteSubjects = require('services/get-vote-subjects.js');
+
 admin.initializeApp(functions.config().firebase);
 
 exports.getVoteSubjects = functions.https.onRequest((request, response) => {
-  const userId = request.query.userId;
-
-  admin.database().ref('/users').once('value').then(users => {
-    response.send(users);
-  });
+  		getVoteSubjects.getVoteSubjectsRoute(request, response);
 });
+
+exports.castVote = functions.https.onRequest((request, response) => {
+	  	castVote.castVoteRoute(request, response);
+});
+
+
+
