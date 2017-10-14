@@ -12,7 +12,9 @@ module.exports = (request, response) => {
 	registerVoteInByStructure(voter, voteSubject, vote);
 	registerVoteInOnStructure(voter, voteSubject, vote);
 
-	response.send("ok");
+	response.send({
+		code : 200
+	});
 }
 
 const registerVoteInByStructure = (voter, voteSubject, vote) => {
