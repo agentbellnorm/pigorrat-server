@@ -13,8 +13,8 @@ module.exports = (request, response) => {
 	])
 	.then(values => {
 		response.send({
-			"pigVotes" : values[0].val() ? Object.keys(values[0].val()).length : 0,
-			"ratVotes" : values[1].val() ? Object.keys(values[1].val()).length : 0
+			"pig" : values[0].val() ? Object.keys(values[0].val()).length : 0,
+			"rat" : values[1].val() ? Object.keys(values[1].val()).length : 0
 		});
 	});
 };
