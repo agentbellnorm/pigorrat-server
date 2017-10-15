@@ -43,7 +43,7 @@ const validate = (request) => {
 		!request.body.userId ||
 		!request.body.voteSubject ||
 		!request.body.vote||
-		!['PIG', 'RAT'].includes(vote); 
+		!['PIG', 'RAT'].includes(request.body.vote); 
 
 	if(violation){
 		throwError(400, "Bad request. Sucker.")
